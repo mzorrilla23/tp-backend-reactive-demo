@@ -7,7 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
 
 import org.hibernate.annotations.Table;
+//import org.springframework.data.annotation.Id;
+
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 @Entity
 @Table("tbl_tipo_cambio")

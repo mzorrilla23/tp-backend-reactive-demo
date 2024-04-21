@@ -1,0 +1,19 @@
+
+server:
+  compression:
+    enabled: true
+    mime-types:
+    - application/json
+    - application/xml
+  servlet:
+    context-path: /tp-logistic
+  port: 9090
+spring:
+  #datasource:
+   # generate-unique-name: true
+  jmx:
+    default-domain: jmx_${random.long}
+    unique-names: true
+  profiles:
+    active:
+    - techpeople_dev
