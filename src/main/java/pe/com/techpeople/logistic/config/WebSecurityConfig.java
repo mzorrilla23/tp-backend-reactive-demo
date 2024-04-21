@@ -12,6 +12,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @Configuration
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
 	@Value("${app.security.jwt-signing-key}")
     private String signingKey;
     
@@ -29,8 +30,25 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.GET, "/sockjs.min.js").permitAll()
 			.antMatchers(HttpMethod.GET, "/stomp.min.js").permitAll()
 			.antMatchers(HttpMethod.GET, "/websocket-example/**").permitAll()
-			 
-
-			.anyRequest().authenticated();
+			.antMatchers("/h2-console/**").permitAll() // Permitir acceso a la consola de H2Database sin autenticación
+			.anyRequest().authenticated()
+			.and()
+	        .headers().frameOptions().disable() // Deshabilitar las restricciones de seguridad de los frames para la consola de H2
+	        .and()
+	        .csrf().ignoringAntMatchers("/h2-console/**") // Ignorar CSRF para la consola de H2Database
+	        .and()
+	        .formLogin();
+		
+		/*
+		http.authorizeRequests()
+        .antMatchers("/h2-console/**").permitAll() // Permitir acceso a la consola de H2Database sin autenticación
+        .anyRequest().authenticated()
+        .and()
+        .headers().frameOptions().disable() // Deshabilitar las restricciones de seguridad de los frames para la consola de H2
+        .and()
+        .csrf().ignoringAntMatchers("/h2-console/**") // Ignorar CSRF para la consola de H2Database
+        .and()
+        .formLogin();*/
+		
 	}
 }
