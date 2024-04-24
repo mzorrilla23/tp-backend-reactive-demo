@@ -6,7 +6,7 @@ server:
     - application/json
     - application/xml
   servlet:
-    context-path: /tp-logistic
+    context-path: /tplogistic
   port: 9090
 spring:
   #datasource:

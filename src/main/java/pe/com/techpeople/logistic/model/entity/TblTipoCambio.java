@@ -7,31 +7,60 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+
 @Entity
-@Table("tbl_tipo_cambio")
+@Table("TBL_TIPO_CAMBIO")
 @NamedQuery(name="TblTipoCambio.findAll", query="SELECT t FROM TblTipoCambio t")
-public class TblTipoCambio implements Serializable{
+public class TblTipoCambio{
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 9118981718096513027L;
 	
 	@Id
     private Long id;
+	@Column("fecha")
     private LocalDate fecha;
+	@Column("compra")
     private Long compra;
+	@Column("venta")
     private Long venta;
+	@Column("periodo")
     private Long periodo;
+	@Column("fecha_crea")
     private LocalDate fecha_crea;
+	@Column("usuario_crea")
     private String usuario_crea;
+	@Column("fecha_update")
     private LocalDate fecha_update;
+	@Column("usuario_update")
     private String usuario_update;
-    private Long flagEstado;
+	@Column("flag_estado")
+    private Long flag_estado;
     
     
+    public TblTipoCambio() {
+    	
+    }
+    
+	public TblTipoCambio(Long id, LocalDate fecha, Long compra, Long venta, Long periodo, LocalDate fecha_crea,
+			String usuario_crea, LocalDate fecha_update, String usuario_update, Long flagEstado) {
+		super();
+		this.id = id;
+		this.fecha = fecha;
+		this.compra = compra;
+		this.venta = venta;
+		this.periodo = periodo;
+		this.fecha_crea = fecha_crea;
+		this.usuario_crea = usuario_crea;
+		this.fecha_update = fecha_update;
+		this.usuario_update = usuario_update;
+		this.flag_estado = flagEstado;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -87,10 +116,10 @@ public class TblTipoCambio implements Serializable{
 		this.usuario_update = usuario_update;
 	}
 	public Long getFlagEstado() {
-		return flagEstado;
+		return flag_estado;
 	}
 	public void setFlagEstado(Long flagEstado) {
-		this.flagEstado = flagEstado;
+		this.flag_estado = flagEstado;
 	}
     
     

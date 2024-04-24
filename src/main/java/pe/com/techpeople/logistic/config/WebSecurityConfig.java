@@ -31,13 +31,13 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.GET, "/stomp.min.js").permitAll()
 			.antMatchers(HttpMethod.GET, "/websocket-example/**").permitAll()
 			.antMatchers("/h2-console/**").permitAll() // Permitir acceso a la consola de H2Database sin autenticación
-			.anyRequest().authenticated()
+			//.anyRequest().authenticated();
 			.and()
-	        .headers().frameOptions().disable() // Deshabilitar las restricciones de seguridad de los frames para la consola de H2
-	        .and()
-	        .csrf().ignoringAntMatchers("/h2-console/**") // Ignorar CSRF para la consola de H2Database
-	        .and()
-	        .formLogin();
+	        .headers().frameOptions().disable(); // Deshabilitar las restricciones de seguridad de los frames para la consola de H2
+	        //.and()
+	        //.csrf().ignoringAntMatchers("/h2-console/**"); // Ignorar CSRF para la consola de H2Database
+	        /*.and()
+	        .formLogin();*/
 		
 		/*
 		http.authorizeRequests()

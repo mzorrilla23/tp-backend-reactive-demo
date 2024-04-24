@@ -2,7 +2,8 @@ spring:
   application:
     name: techpeople
   r2dbc:
-    url: r2dbc:h2:mem:///test;DB_CLOSE_DELAY=-1
+    url: r2dbc:h2:mem:///test;DB_CLOSE_DELAY=-1 #r2dbc:h2:mem:///test
+    driver-class-name: org.h2.Driver
     username: sa
     password: Techpeople@2307
     initialization-mode: always
@@ -10,7 +11,15 @@ spring:
   h2:
     console:
       enabled: true
+      path: /h2-conso
+    database:
+      name: test
+      schema: classpath:schema.sql # Ruta opcional al archivo de esquema SQL
 app:
   security:
     jwt-signing-key: 123dsdfdf23123
-    
+
+logging:
+  level:
+    pe.com.techpeople.logistic: DEBUG
+    #org.hibernate: DEBUG
