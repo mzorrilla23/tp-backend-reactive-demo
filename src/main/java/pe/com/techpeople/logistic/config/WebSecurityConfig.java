@@ -19,26 +19,30 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable() 
-			.addFilterAfter(new JWTAuthorizationFilter(signingKey), UsernamePasswordAuthenticationFilter.class)
-			.authorizeRequests()
-			.antMatchers(HttpMethod.GET, "/app.js").permitAll()
-			.antMatchers(HttpMethod.GET, "/app2.js").permitAll()
-			.antMatchers(HttpMethod.GET, "/bootstrap.min.css").permitAll()
-			.antMatchers(HttpMethod.GET, "/index.html").permitAll()
-			.antMatchers(HttpMethod.GET, "/index2.html").permitAll()
-			.antMatchers(HttpMethod.GET, "/jquery.min.js").permitAll()
-			.antMatchers(HttpMethod.GET, "/sockjs.min.js").permitAll()
-			.antMatchers(HttpMethod.GET, "/stomp.min.js").permitAll()
-			.antMatchers(HttpMethod.GET, "/websocket-example/**").permitAll()
-			.antMatchers("/h2-console/**").permitAll() // Permitir acceso a la consola de H2Database sin autenticación
-			//.anyRequest().authenticated();
-			.and()
-	        .headers().frameOptions().disable(); // Deshabilitar las restricciones de seguridad de los frames para la consola de H2
-	        //.and()
-	        //.csrf().ignoringAntMatchers("/h2-console/**"); // Ignorar CSRF para la consola de H2Database
-	        /*.and()
-	        .formLogin();*/
+		//.addFilterAfter(new JWTAuthorizationFilter(signingKey), UsernamePasswordAuthenticationFilter.class)
+		.authorizeRequests()
+		.antMatchers(HttpMethod.GET, "/app.js").permitAll()
+		.antMatchers(HttpMethod.GET, "/app2.js").permitAll()
+		.antMatchers(HttpMethod.GET, "/bootstrap.min.css").permitAll()
+		.antMatchers(HttpMethod.GET, "/index.html").permitAll()
+		.antMatchers(HttpMethod.GET, "/index2.html").permitAll()
+		.antMatchers(HttpMethod.GET, "/jquery.min.js").permitAll()
+		.antMatchers(HttpMethod.GET, "/sockjs.min.js").permitAll()
+		.antMatchers(HttpMethod.GET, "/stomp.min.js").permitAll()
+		.antMatchers(HttpMethod.GET, "/websocket-example/**").permitAll()
+		.antMatchers("/h2-console/**").permitAll() // Permitir acceso a la consola de H2Database sin autenticación
+		//.antMatchers("/authenticate").permitAll()
+		//.anyRequest().authenticated()
+		.and()
+        .headers().frameOptions().disable() // Deshabilitar las restricciones de seguridad de los frames para la consola de H2
+        //.and()
+        //.csrf().ignoringAntMatchers("/h2-console/**") // Ignorar CSRF para la consola de H2Database
+        .and()
+        .formLogin()
+        .and()
+			.addFilterAfter(new JWTAuthorizationFilter(signingKey), UsernamePasswordAuthenticationFilter.class);
 		
+    
 		/*
 		http.authorizeRequests()
         .antMatchers("/h2-console/**").permitAll() // Permitir acceso a la consola de H2Database sin autenticación
