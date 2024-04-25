@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 
@@ -13,7 +15,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Entity
 @Table("TBL_TIPO_CAMBIO")
-@NamedQuery(name="TblTipoCambio.findAll", query="SELECT t FROM TblTipoCambio t")
+//@NamedQuery(name="TblTipoCambio.findAll", query="SELECT t FROM TblTipoCambio t")
 public class TblTipoCambio{
 	
 	/**
@@ -21,7 +23,10 @@ public class TblTipoCambio{
 	 */
 	
 	@Id
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column("id_tipo_cambio")
+    private Long id_tipo_cambio;
+	
 	@Column("fecha")
     private LocalDate fecha;
 	@Column("compra")
@@ -49,7 +54,7 @@ public class TblTipoCambio{
 	public TblTipoCambio(Long id, LocalDate fecha, Long compra, Long venta, Long periodo, LocalDate fecha_crea,
 			String usuario_crea, LocalDate fecha_update, String usuario_update, Long flagEstado) {
 		super();
-		this.id = id;
+		this.id_tipo_cambio = id;
 		this.fecha = fecha;
 		this.compra = compra;
 		this.venta = venta;
@@ -62,10 +67,10 @@ public class TblTipoCambio{
 	}
 
 	public Long getId() {
-		return id;
+		return id_tipo_cambio;
 	}
 	public void setId(Long id) {
-		this.id = id;
+		this.id_tipo_cambio = id;
 	}
 	public LocalDate getFecha() {
 		return fecha;
