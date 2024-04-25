@@ -18,6 +18,9 @@ spring:
     #database:
      # name: test
       #schema: classpath:schema.sql # Ruta opcional al archivo de esquema SQL
+  jpa:
+    hibernate:
+      ddl-auto: create
 app:
   security:
     jwt-signing-key: 123dsdfdf23123
