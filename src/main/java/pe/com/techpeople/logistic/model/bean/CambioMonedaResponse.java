@@ -12,10 +12,10 @@ import pe.com.techpeople.logistic.model.entity.TblTipoCambio;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CambioMonedaRequest {
+public class CambioMonedaResponse {
 	private String fecha;
-	private String moneda;
-	private Long cantidad;
-
+	Long   tipoCambio;
+	Long   cantidad;
+	
 
 }

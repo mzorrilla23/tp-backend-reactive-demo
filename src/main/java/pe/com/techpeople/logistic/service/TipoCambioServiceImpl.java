@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import pe.com.techpeople.logistic.model.bean.CambioMonedaRequest;
+import pe.com.techpeople.logistic.model.bean.CambioMonedaResponse;
 import pe.com.techpeople.logistic.model.bean.TransaccionBean;
 import pe.com.techpeople.logistic.model.entity.TblTipoCambio;
 import pe.com.techpeople.logistic.repository.TipoCambioRepository;
@@ -77,7 +78,7 @@ public class TipoCambioServiceImpl implements TipoCambioServiceInterface{
 	
 	 
 	@Override 
-	 public Flux<Double> cambioMonedaCompra(  CambioMonedaRequest cambioMonedaRequest){
+	 public Flux<CambioMonedaResponse> cambioMonedaCompra(  CambioMonedaRequest cambioMonedaRequest){
 	     System.out.println("Llego a api mono id: " + cambioMonedaRequest.getFecha());
 	     LocalDate fechaConsulta = LocalDate.parse(cambioMonedaRequest.getFecha());
 	     
@@ -86,22 +87,35 @@ public class TipoCambioServiceImpl implements TipoCambioServiceInterface{
 	     
 	     // Filtrar los registros por la moneda especificada
 	     Flux<TblTipoCambio> tipoCambioMonedaFlux = tipoCambioFlux.filter(tc -> tc.getMoneda().equals(cambioMonedaRequest.getMoneda()));
-	     Flux<Double> valorCambiadoFlux = tipoCambioMonedaFlux.map(tc -> tc.getCompra() * cambioMonedaRequest.getCantidad() );
+	     Flux<CambioMonedaResponse> valorCambiadoFlux = tipoCambioMonedaFlux.map(tc -> {
+			CambioMonedaResponse cambioMonedaResponse = new CambioMonedaResponse();
+			cambioMonedaResponse.setFecha(cambioMonedaRequest.getFecha());
+			Long respuesta = tc.getCompra() * cambioMonedaRequest.getCantidad();
+			cambioMonedaResponse.setCantidad(respuesta);
+			cambioMonedaResponse.setTipoCambio(tc.getCompra());
+			return cambioMonedaResponse ;
+		} );
 
 	     return valorCambiadoFlux;
 	 }
 	 
 	@Override
-	 public Flux<Double> cambioMonedaVenta(  CambioMonedaRequest cambioMonedaRequest){
+	 public Flux<CambioMonedaResponse> cambioMonedaVenta(  CambioMonedaRequest cambioMonedaRequest){
 	     System.out.println("Llego a api mono id: " + cambioMonedaRequest.getFecha());
 	     LocalDate fechaConsulta = LocalDate.parse(cambioMonedaRequest.getFecha());
 	     
 	     // Obtener los registros de tipo cambio para la fecha especificada
 	     Flux<TblTipoCambio> tipoCambioFlux =  getFecha(fechaConsulta);
 	     
-	     // Filtrar los registros por la moneda especificada
 	     Flux<TblTipoCambio> tipoCambioMonedaFlux = tipoCambioFlux.filter(tc -> tc.getMoneda().equals(cambioMonedaRequest.getMoneda()));
-	     Flux<Double> valorCambiadoFlux = tipoCambioMonedaFlux.map(tc -> tc.getVenta()  * cambioMonedaRequest.getCantidad() );
+	     Flux<CambioMonedaResponse> valorCambiadoFlux = tipoCambioMonedaFlux.map(tc -> {
+			CambioMonedaResponse cambioMonedaResponse = new CambioMonedaResponse();
+			Long respuesta = tc.getVenta()  * cambioMonedaRequest.getCantidad();
+			cambioMonedaResponse.setFecha(cambioMonedaRequest.getFecha());
+			cambioMonedaResponse.setCantidad(respuesta);
+			cambioMonedaResponse.setTipoCambio(tc.getVenta());
+			return cambioMonedaResponse ;
+		} );
 
 	     return valorCambiadoFlux;
 	 }
