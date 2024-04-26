@@ -1,5 +1,6 @@
 package pe.com.techpeople.logistic.model.bean;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
@@ -14,8 +15,8 @@ import pe.com.techpeople.logistic.model.entity.TblTipoCambio;
 @AllArgsConstructor
 public class CambioMonedaResponse {
 	private String fecha;
-	Long   tipoCambio;
-	Long   cantidad;
+	BigDecimal   tipoCambio;
+	BigDecimal    cantidad;
 	
 
 }

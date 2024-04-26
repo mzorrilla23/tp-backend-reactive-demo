@@ -1,5 +1,6 @@
 package pe.com.techpeople.logistic.model.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.springframework.data.annotation.Id;
@@ -29,9 +30,9 @@ public class TblTipoCambio{
 
     private LocalDate fecha;
 	
-    private Long compra;
+    private BigDecimal  compra;
 
-    private Long venta;
+    private BigDecimal venta;
 
     private Long periodo;
 

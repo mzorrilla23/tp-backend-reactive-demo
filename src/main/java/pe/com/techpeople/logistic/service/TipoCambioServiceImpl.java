@@ -1,5 +1,7 @@
 package pe.com.techpeople.logistic.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.function.Function;
 
@@ -90,9 +92,9 @@ public class TipoCambioServiceImpl implements TipoCambioServiceInterface{
 	     Flux<CambioMonedaResponse> valorCambiadoFlux = tipoCambioMonedaFlux.map(tc -> {
 			CambioMonedaResponse cambioMonedaResponse = new CambioMonedaResponse();
 			cambioMonedaResponse.setFecha(cambioMonedaRequest.getFecha());
-			Long respuesta = tc.getCompra() * cambioMonedaRequest.getCantidad();
-			cambioMonedaResponse.setCantidad(respuesta);
-			cambioMonedaResponse.setTipoCambio(tc.getCompra());
+			BigDecimal respuesta = tc.getCompra().multiply(BigDecimal.valueOf(cambioMonedaRequest.getCantidad()))  ;
+			cambioMonedaResponse.setCantidad(respuesta.setScale(3, RoundingMode.HALF_UP));
+			cambioMonedaResponse.setTipoCambio(  tc.getCompra()   );
 			return cambioMonedaResponse ;
 		} );
 
@@ -109,12 +111,12 @@ public class TipoCambioServiceImpl implements TipoCambioServiceInterface{
 	     
 	     Flux<TblTipoCambio> tipoCambioMonedaFlux = tipoCambioFlux.filter(tc -> tc.getMoneda().equals(cambioMonedaRequest.getMoneda()));
 	     Flux<CambioMonedaResponse> valorCambiadoFlux = tipoCambioMonedaFlux.map(tc -> {
-			CambioMonedaResponse cambioMonedaResponse = new CambioMonedaResponse();
-			Long respuesta = tc.getVenta()  * cambioMonedaRequest.getCantidad();
-			cambioMonedaResponse.setFecha(cambioMonedaRequest.getFecha());
-			cambioMonedaResponse.setCantidad(respuesta);
-			cambioMonedaResponse.setTipoCambio(tc.getVenta());
-			return cambioMonedaResponse ;
+	    	 CambioMonedaResponse cambioMonedaResponse = new CambioMonedaResponse();
+				cambioMonedaResponse.setFecha(cambioMonedaRequest.getFecha());
+				BigDecimal respuesta = tc.getVenta().multiply(BigDecimal.valueOf(cambioMonedaRequest.getCantidad()))  ;
+				cambioMonedaResponse.setCantidad(respuesta.setScale(3, RoundingMode.HALF_UP));
+				cambioMonedaResponse.setTipoCambio(  tc.getCompra()   );
+				return cambioMonedaResponse ;
 		} );
 
 	     return valorCambiadoFlux;
