@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import pe.com.techpeople.logistic.model.bean.CambioMonedaRequest;
 import pe.com.techpeople.logistic.model.bean.TransaccionBean;
 import pe.com.techpeople.logistic.model.entity.TblTipoCambio;
 import pe.com.techpeople.logistic.service.TipoCambioServiceImpl;
@@ -61,5 +62,29 @@ public class TipoCambioController {
 		
 		 return tipoCambioService.getFecha(LocalDate.parse(fecha));
 	 }
-
+	 
+	 @PostMapping("/cambioMonedaCompraHoy")
+	 public Flux<Double> cambioMonedaCompraHoy(@RequestBody CambioMonedaRequest cambioMonedaRequest){
+		 // print(java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern('yyyy-MM-dd')))
+		 
+		 cambioMonedaRequest.setFecha(java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+	 	     return tipoCambioService.cambioMonedaCompra(cambioMonedaRequest) ;
+	 }
+	 
+	 @PostMapping("/cambioMonedaVentaHoy")
+	 public Flux<Double> cambioMonedaVentaHoy(@RequestBody CambioMonedaRequest cambioMonedaRequest){
+		 cambioMonedaRequest.setFecha(java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+	     return tipoCambioService.cambioMonedaVenta(cambioMonedaRequest) ;
+	 }
+	 
+	 
+	 @PostMapping("/cambioMonedaCompra")
+	 public Flux<Double> cambioMonedaCompra(@RequestBody CambioMonedaRequest cambioMonedaRequest){
+	 	     return tipoCambioService.cambioMonedaCompra(cambioMonedaRequest) ;
+	 }
+	 
+	 @PostMapping("/cambioMonedaVenta")
+	 public Flux<Double> cambioMonedaVenta(@RequestBody CambioMonedaRequest cambioMonedaRequest){
+	     return tipoCambioService.cambioMonedaVenta(cambioMonedaRequest) ;
+	 }
 }

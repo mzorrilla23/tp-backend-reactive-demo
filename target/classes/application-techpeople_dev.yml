@@ -3,6 +3,8 @@ spring:
     name: techpeople
   r2dbc:
     url: r2dbc:h2:mem:///test;DB_CLOSE_DELAY=-1 #r2dbc:h2:mem:///test;DB_CLOSE_DELAY=-1 #r2dbc:h2:mem:///test #r2dbc:h2:mem:///testdb
+    #url: r2dbc:h2:~///test;DB_CLOSE_DELAY=-1 #r2dbc:h2:mem:///test;DB_CLOSE_DELAY=-1 #r2dbc:h2:mem:///test #r2dbc:h2:mem:///testdb
+    
     driver-class-name: io.r2dbc.h2.H2ConnectionConfiguration #org.h2.Driver
     #driver-class-name: org.h2.Driver
     username: sa

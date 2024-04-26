@@ -5,7 +5,10 @@ import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import pe.com.techpeople.logistic.model.bean.CambioMonedaRequest;
 import pe.com.techpeople.logistic.model.bean.TransaccionBean;
 import pe.com.techpeople.logistic.model.entity.TblTipoCambio;
 import pe.com.techpeople.logistic.repository.TipoCambioRepository;
@@ -73,6 +76,34 @@ public class TipoCambioServiceImpl implements TipoCambioServiceInterface{
 	}
 	
 	 
-	
+	@Override 
+	 public Flux<Double> cambioMonedaCompra(  CambioMonedaRequest cambioMonedaRequest){
+	     System.out.println("Llego a api mono id: " + cambioMonedaRequest.getFecha());
+	     LocalDate fechaConsulta = LocalDate.parse(cambioMonedaRequest.getFecha());
+	     
+	     // Obtener los registros de tipo cambio para la fecha especificada
+	     Flux<TblTipoCambio> tipoCambioFlux =  getFecha(fechaConsulta);
+	     
+	     // Filtrar los registros por la moneda especificada
+	     Flux<TblTipoCambio> tipoCambioMonedaFlux = tipoCambioFlux.filter(tc -> tc.getMoneda().equals(cambioMonedaRequest.getMoneda()));
+	     Flux<Double> valorCambiadoFlux = tipoCambioMonedaFlux.map(tc -> tc.getCompra() * cambioMonedaRequest.getCantidad() );
+
+	     return valorCambiadoFlux;
+	 }
+	 
+	@Override
+	 public Flux<Double> cambioMonedaVenta(  CambioMonedaRequest cambioMonedaRequest){
+	     System.out.println("Llego a api mono id: " + cambioMonedaRequest.getFecha());
+	     LocalDate fechaConsulta = LocalDate.parse(cambioMonedaRequest.getFecha());
+	     
+	     // Obtener los registros de tipo cambio para la fecha especificada
+	     Flux<TblTipoCambio> tipoCambioFlux =  getFecha(fechaConsulta);
+	     
+	     // Filtrar los registros por la moneda especificada
+	     Flux<TblTipoCambio> tipoCambioMonedaFlux = tipoCambioFlux.filter(tc -> tc.getMoneda().equals(cambioMonedaRequest.getMoneda()));
+	     Flux<Double> valorCambiadoFlux = tipoCambioMonedaFlux.map(tc -> tc.getVenta()  * cambioMonedaRequest.getCantidad() );
+
+	     return valorCambiadoFlux;
+	 }
 
 }

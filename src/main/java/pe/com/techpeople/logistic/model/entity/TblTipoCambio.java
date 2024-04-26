@@ -45,4 +45,6 @@ public class TblTipoCambio{
 
     private Long flagEstado;
     
+    private String moneda;
+
 }

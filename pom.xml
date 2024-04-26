@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<!-- 
+
+ C:\Users\HP\.m2\repository\com\h2database\h2\1.4.200\h2-1.4.200.jar
+ 
+ jrunscript -classpath h2-1.4.200.jar -e "var c=java.sql.DriverManager.getConnection('jdbc:h2:mem:test','sa','Techpeople@2307');if(c!=null){print('Conexión exitosa a la base de datos.');c.close();}else{print('Error al conectar a la base de datos.');}"
+
+
+ -->
+	
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -86,11 +95,13 @@
 			<artifactId>token-provider</artifactId>
 			<version>1.0.0-RC2</version>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
 			<version>5.6.0</version>
-	   </dependency> 
+	   </dependency>
+	    --> 
 	   <dependency>
 		    <groupId>javax.ws.rs</groupId>
 		    <artifactId>javax.ws.rs-api</artifactId>
